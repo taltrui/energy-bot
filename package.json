@@ -1,0 +1,20 @@
+{
+  "name": "pr-notificator",
+  "version": "0.0.1",
+  "description": "Github PR Notificator for Slack",
+  "main": "index.js",
+  "author": "Tomás Altrui",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-link": "^1.2.12",
+    "apollo-link-http": "^1.5.15",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.6.0"
+  },
+  "scripts": {
+    "start": "node -r esm index.js"
+  }
+}
