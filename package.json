@@ -2,19 +2,36 @@
   "name": "pr-notificator",
   "version": "0.0.1",
   "description": "Github PR Notificator for Slack",
-  "main": "index.js",
+  "main": "src/index.js",
   "author": "Tomás Altrui",
   "license": "MIT",
   "dependencies": {
+    "@slack/web-api": "^5.1.0",
     "apollo-link": "^1.2.12",
     "apollo-link-http": "^1.5.15",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^2.6.3"
   },
   "scripts": {
-    "start": "node -r esm index.js"
+    "start": "npm run prod",
+    "server": "babel-node ./src/index.js",
+    "server:prod": "node ./dist/index.js",
+    "dev": "SET NODE_ENV=development && npm-run-all server",
+    "clean": "rimraf dist",
+    "build": "babel ./src --out-dir dist",
+    "prod": "SET NODE_ENV=production && npm-run-all clean build server:prod",
+    "watch": "nodemon"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "nodemon": "^1.19.1"
   }
 }
