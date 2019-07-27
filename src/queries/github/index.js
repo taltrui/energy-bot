@@ -1,25 +1,31 @@
 import gql from "graphql-tag";
-import { makeQuery } from "../utils/queryHandler";
+import { makeQuery } from "../utils/QueryHandler";
 
-export const getPrs = (owner, name, amount, state) =>
+export const getPrs = from =>
   makeQuery({
     query: gql`
-      query GET_PRS(
-        $owner: String!
-        $name: String!
-        $amount: Int
-        $state: [PullRequestState!]
-      ) {
-        repository(owner: $owner, name: $name) {
-          pullRequests(last: $amount, states: $state) {
+      query GET_PRS($from: String!) {
+        user(login: $from) {
+          repositories(last: 100) {
             edges {
               node {
-                title
-                url
-                labels(first: 5) {
+                name
+                pullRequests(last: 100, states: OPEN) {
                   edges {
                     node {
-                      name
+                      createdAt
+                      headRefName
+                      author {
+                        login
+                      }
+                      title
+                      assignees(last: 30) {
+                        edges {
+                          node {
+                            name
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -30,9 +36,6 @@ export const getPrs = (owner, name, amount, state) =>
       }
     `,
     variables: {
-      owner,
-      name,
-      amount,
-      state
+      from
     }
   });
