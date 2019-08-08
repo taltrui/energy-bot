@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { makeQuery } from "../utils/QueryHandler";
+import { makeQuery } from "../utils/queryHandler";
 
 export const getPrs = from =>
   makeQuery({

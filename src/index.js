@@ -1,5 +1,5 @@
 import { getPrs } from "./queries/github";
-import { formatPRData } from "./utils/github";
+import { postMessage } from "./handlers/slack/PostMessage";
 
 const test = async () => {
   let data = '';
@@ -8,7 +8,8 @@ const test = async () => {
   } catch (error) {
     console.log(error);
   } 
-  formatPRData(data);
+  
+  postMessage(data, "general");
 
 };
 

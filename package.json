@@ -21,10 +21,10 @@
     "start": "npm run prod",
     "server": "babel-node ./src/index.js",
     "server:prod": "node ./dist/index.js",
-    "dev": "SET NODE_ENV=development && npm-run-all server",
+    "dev": "NODE_ENV=development && npm-run-all server",
     "clean": "rimraf dist",
     "build": "babel ./src --out-dir dist",
-    "prod": "SET NODE_ENV=production && npm-run-all clean build server:prod",
+    "prod": "NODE_ENV=production && npm-run-all clean build server:prod",
     "watch": "nodemon"
   },
   "devDependencies": {
