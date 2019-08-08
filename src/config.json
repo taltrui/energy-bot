@@ -1,0 +1,20 @@
+{
+  "repositories": [
+    "UtilityGO-Energy-Simulator-Metrogas",
+    "UtilityGO-Backoffice-Camuzzi",
+    "UtilityGO-Agent-Web",
+    "UtilityGO-Office-Web",
+    "UtilityGO-Energy-Simulator",
+    "UtilityGO-Office-Web-Edenor",
+    "UtilityGO-Forms-Web",
+    "Energy-UI",
+    "UtilityGO-Office-Totem",
+    "web-utils",
+    "Camuzzi-UI",
+    "polling-handling",
+    "Metrogas-UI",
+    "UtilityGO-CrewSourcing-Camuzzi"
+  ],
+  "channel": "team-web",
+  "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"]
+}
