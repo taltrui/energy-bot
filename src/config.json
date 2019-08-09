@@ -16,5 +16,6 @@
     "UtilityGO-CrewSourcing-Camuzzi"
   ],
   "channel": "team-web",
-  "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"]
+  "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"],
+  "directives": ["PRReminder"]
 }

@@ -9,6 +9,7 @@
     "@slack/web-api": "^5.1.0",
     "apollo-link": "^1.2.12",
     "apollo-link-http": "^1.5.15",
+    "dotenv": "^8.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "graphql": "^14.4.2",

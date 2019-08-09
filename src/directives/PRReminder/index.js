@@ -14,7 +14,11 @@ const execute = async () => {
 
   const formattedData = formatPRData(data);
 
-  postMessage('Llegaron los PRs!', config.channel, createMessage(formattedData))
+  postMessage(
+    'Llegaron los PRs!',
+    config.channel,
+    createMessage(formattedData)
+  );
 };
 
-execute();
+export { execute };

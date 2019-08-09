@@ -1,9 +1,10 @@
 import gql from 'graphql-tag';
 import QueryHandler from '../../handlers/graphql/QueryHandler';
 
-const uri = 'https://api.github.com/graphql';
+const uri = process.env.GITHUB_API_URI;
+console.log(uri);
 const headers = {
-  authorization: 'Bearer 8ce0519cb4e19305b56c4748768d91333ed798d6'
+  authorization: `Bearer ${process.env.GITHUB_AUTH_TOKEN}`
 };
 
 const QueryMaker = new QueryHandler(uri, headers);
