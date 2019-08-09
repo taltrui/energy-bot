@@ -21,10 +21,10 @@ const prTextFormater = pr => {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `• ${pr.repo} | <${pr.link}|*${
+      text: `• *${pr.repo}* | <${pr.link}|*${
         pr.title
       }*>\n _Asignados_: ${pr.assignees
-        .map(assignee => assignee.name)
+        .map(assignee => `*${assignee.name}*`)
         .join(', ')}\n _Abierto hace_: ${openSince}`
     }
   };
