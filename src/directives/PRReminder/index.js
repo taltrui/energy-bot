@@ -1,7 +1,7 @@
 import { postMessage } from '../../handlers/slack/PostMessage';
 import { formatPRData } from '../../utils/github';
 import { getPrs } from '../../queries/github';
-import config from '../../config';
+import config from '../../utils/config';
 import { createMessage } from './utils';
 
 const execute = async () => {
