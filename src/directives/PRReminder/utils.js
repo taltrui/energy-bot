@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getSlackId } from '../../utils/slack';
 
 const prTextFormater = pr => {
   const today = moment();
@@ -24,7 +25,7 @@ const prTextFormater = pr => {
       text: `• *${pr.repo}* | <${pr.link}|*${
         pr.title
       }*>\n _Asignados_: ${pr.assignees
-        .map(assignee => `*${assignee.name}*`)
+        .map(assignee => `*${getSlackId(assignee.name)}*`)
         .join(', ')}\n _Abierto hace_: ${openSince}`
     }
   };

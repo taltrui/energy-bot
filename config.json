@@ -17,5 +17,9 @@
   ],
   "channel": "team-web",
   "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"],
-  "directives": ["PRReminder"]
+  "directives": ["PRReminder"],
+  "teamMembers": {
+    "Sebastian Gulino": "ULTNW0DPX",
+    "Tomás Altrui": "ULFLTG7J6"
+  }
 }
