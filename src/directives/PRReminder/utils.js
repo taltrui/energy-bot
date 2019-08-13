@@ -22,7 +22,7 @@ const prTextFormater = pr => {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `• *${pr.repo}* | <${pr.link}|*${
+      text: `• *${pr.repo}* [${pr.number}] | <${pr.link}|*${
         pr.title
       }*>\n _Asignados_: ${pr.assignees
         .map(assignee => `*${getSlackId(assignee.name)}*`)
@@ -35,11 +35,11 @@ export const createMessage = prs => {
   const today = moment();
 
   const olderPrs = prs.filter(
-    pr => today.diff(moment(pr.createdAt), 'days') > 1
+    pr => today.diff(moment(pr.updatedAt), 'days') > 1
   );
 
   const newerPrs = prs.filter(
-    pr => today.diff(moment(pr.createdAt), 'days', true) < 1
+    pr => today.diff(moment(pr.updatedAt), 'days', true) < 1
   );
 
   const formattedOlderPrs = olderPrs.map(prTextFormater);

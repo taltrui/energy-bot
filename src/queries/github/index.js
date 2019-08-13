@@ -23,6 +23,8 @@ export const getPrs = from =>
                       createdAt
                       headRefName
                       permalink
+                      number
+                      updatedAt
                       repository {
                         name
                       }

@@ -30,7 +30,9 @@ const formatPrs = prs =>
     title: pr.node.title,
     assignees: formatAsignees(pr.node.assignees),
     link: pr.node.permalink,
-    repo: pr.node.repository.name
+    repo: pr.node.repository.name,
+    number: pr.node.number,
+    updatedAt: pr.node.updatedAt
   }));
 
 const formatAsignees = assignees =>
