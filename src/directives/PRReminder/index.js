@@ -12,7 +12,6 @@ const execute = async () => {
     console.log(error);
   }
 
-  console.log(data);
   const formattedData = formatPRData(data);
 
   postMessage(

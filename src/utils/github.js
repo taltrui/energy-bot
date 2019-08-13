@@ -23,7 +23,7 @@ const filterPrs = prs =>
   });
 
 const formatPrs = prs =>
-  prs.map(pr => console.log(pr) || ({
+  prs.map(pr => ({
     createdAt: pr.node.createdAt,
     name: pr.node.headRefName,
     author: pr.node.author.login,
