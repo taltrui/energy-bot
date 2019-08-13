@@ -23,14 +23,16 @@ const filterPrs = prs =>
   });
 
 const formatPrs = prs =>
-  prs.map(pr => ({
+  prs.map(pr => console.log(pr) || ({
     createdAt: pr.node.createdAt,
     name: pr.node.headRefName,
     author: pr.node.author.login,
     title: pr.node.title,
     assignees: formatAsignees(pr.node.assignees),
     link: pr.node.permalink,
-    repo: pr.node.repository.name
+    repo: pr.node.repository.name,
+    number: pr.node.number,
+    updatedAt: pr.node.updatedAt
   }));
 
 const formatAsignees = assignees =>
