@@ -15,11 +15,15 @@
     "Metrogas-UI",
     "UtilityGO-CrewSourcing-Camuzzi"
   ],
-  "channel": "team-web",
+  "channel": "bot-test",
   "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"],
   "directives": ["PRReminder"],
   "teamMembers": {
-    "Sebastian Gulino": "ULTNW0DPX",
-    "Tomás Altrui": "ULFLTG7J6"
+    "Sebastian Gulino": "U35NUA2G7",
+    "Tomás Altrui": "UASTQ9LBB",
+    "Thomas Becerro": "UENHFQ8GN",
+    "Flavio Iozzoli": "UHBFPJU1H",
+    "Martin Gonzalez": "U8YPCLPHU",
+    "Guido Lipina": "UKDPBS2DS"
   }
 }
