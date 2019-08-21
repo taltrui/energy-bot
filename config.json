@@ -15,7 +15,7 @@
     "Metrogas-UI",
     "UtilityGO-CrewSourcing-Camuzzi"
   ],
-  "channel": "bot-test",
+  "channel": "team-web",
   "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"],
   "directives": ["PRReminder"],
   "teamMembers": {
