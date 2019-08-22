@@ -39,6 +39,16 @@ export const getPrs = from =>
                         login
                       }
                       title
+                      reviews(first: 10) {
+                        edges {
+                          node {
+                            author {
+                              login
+                            }
+                            state
+                          }
+                        }
+                      }
                       assignees(first: 20) {
                         edges {
                           node {
