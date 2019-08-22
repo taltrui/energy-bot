@@ -16,7 +16,7 @@
     "UtilityGO-CrewSourcing-Camuzzi"
   ],
   "channel": "team-web",
-  "labelsToAvoid": ["Ready for Release!", "Release", "HOLD"],
+  "labelsToAvoid": ["Release", "HOLD"],
   "directives": ["PRReminder"],
   "teamMembers": {
     "Sebastian Gulino": "U35NUA2G7",
