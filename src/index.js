@@ -14,7 +14,7 @@ import { createEventAdapter } from '@slack/events-api';
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const port = process.env.PORT || 3000
 const app = express();
-
+const slackEvents = createEventAdapter(slackSigningSecret);
 
 app.use('/slack/events', slackEvents.requestListener());
 
