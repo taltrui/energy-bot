@@ -6,9 +6,11 @@
   "author": "Tomás Altrui",
   "license": "MIT",
   "dependencies": {
+    "@slack/events-api": "^2.3.0",
     "@slack/web-api": "^5.1.0",
     "apollo-link": "^1.2.12",
     "apollo-link-http": "^1.5.15",
+    "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",

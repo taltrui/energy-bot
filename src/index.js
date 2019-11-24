@@ -8,10 +8,17 @@
 // run();
 
 import express from 'express';
+import bodyParser from 'body-parser';
+import { createEventAdapter } from '@slack/events-api';
 
+const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
+const port = process.env.PORT || 3000
 const app = express();
 
-const port = process.env.PORT || 3000
+
+app.use('/slack/events', slackEvents.requestListener());
+
+app.use(bodyParser());
 
 app.get('/', function(req, res) {
   res.send('Hello World!');
