@@ -1,7 +1,7 @@
 {
-  "name": "pr-notificator",
+  "name": "energy-bot",
   "version": "1.2.0",
-  "description": "Github PR Notificator for Slack",
+  "description": "Bot for Slack",
   "main": "src/index.js",
   "author": "Tomás Altrui",
   "license": "MIT",
