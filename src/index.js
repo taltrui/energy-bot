@@ -16,6 +16,11 @@ const port = process.env.PORT || 3000
 const app = express();
 const slackEvents = createEventAdapter(slackSigningSecret);
 
+
+slackEvents.on('message', (event) => {
+  console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
+});
+
 app.use('/slack/events', slackEvents.requestListener());
 
 app.use(bodyParser());
