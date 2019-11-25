@@ -14,7 +14,7 @@ import { postMessage } from './handlers/slack/PostMessage';
 const port = process.env.PORT || 3000
 const app = express();
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   res.send('Hello World!');
@@ -22,6 +22,8 @@ app.get('/', function(req, res) {
 
 app.post('/hello', (req, res) => {
   console.log(req);
+
+  res.send('');
 })
 
 app.listen(port, function() {
