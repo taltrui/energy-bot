@@ -14,15 +14,16 @@ const port = process.env.PORT || 3000
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
-app.post('/hello', (req, res) => {
-  console.log(req);
+app.post('/hello', function(req, res) {
+  console.log(req.body);
 
-  res.send('');
+  res.send('Huesaaaa');
 })
 
 app.listen(port, function() {
