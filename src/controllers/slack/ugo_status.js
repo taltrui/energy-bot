@@ -8,8 +8,7 @@ router.post('/', async function(req, res) {
 
   const ugo_data = await ugo_res.json();  
 
-  console.log(ugo_data);
-  res.send(ugo_data.status === 200 ? 'La API de UGO está funcionando correctamente!' : 'La API de UGO se encuentra caida :(' );
+  res.send(ugo_data.healthy ? 'La API de UGO está funcionando correctamente!' : 'La API de UGO se encuentra caida :(' );
 });
 
 export default router;
