@@ -8,20 +8,19 @@ import "regenerator-runtime/runtime";
 // run();
 
 import express from 'express';
-import bodyParser from 'body-parser';
 import { postMessage } from './handlers/slack/PostMessage';
 
 const port = process.env.PORT || 3000
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
 app.post('/hello', (req, res) => {
-  console.log(req.body);
+  console.log(req);
 
   res.send('');
 })
