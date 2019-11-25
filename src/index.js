@@ -21,7 +21,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/hello', (req, res) => {
-  console.log(req);
+  console.log(req.body);
 
   res.send('');
 })
