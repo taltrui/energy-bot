@@ -9,7 +9,10 @@ const filterReposByNameAndPrs = repos =>
   );
 
 const getPrs = repos =>
-  Array.prototype.concat.apply([], repos.map(repo => formatPrs(filterPrs(repo.node.pullRequests.edges))));
+  Array.prototype.concat.apply(
+    [],
+    repos.map(repo => formatPrs(filterPrs(repo.node.pullRequests.edges)))
+  );
 
 const filterPrs = prs =>
   prs.filter(pr => {

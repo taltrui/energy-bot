@@ -1,4 +1,4 @@
-import client from "./WebClient";
+import client from './WebClient';
 
 export const postMessage = async (text, channel, blocks) => {
   try {
