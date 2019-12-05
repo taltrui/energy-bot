@@ -1,4 +1,7 @@
-import config from './config';
+import { getEmployee } from '../models/config';
 
-export const getSlackId = name =>
-  typeof config.teamMembers[name] === 'string' ? `<@${config.teamMembers[name]}>` : name;
+export const getSlackId = name => {
+  const { slack_id } = getEmployee(name) || {};
+
+  return slack_id ? `<@${slack_id}>` : name;
+};

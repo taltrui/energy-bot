@@ -1,4 +1,6 @@
-import CronJob from 'cron';
+import { CronJob } from 'cron';
+import { getCollection } from '../queries/firestore/utils';
+import { getDirectives } from '../models/config';
 
 const createJob = (directive, config) => {
   const job = new CronJob(config.cron, () => directive.execute(config));
@@ -14,4 +16,15 @@ const initDirective = async directive => {
   config.forEach(_config => createJob(dirToRun, _config));
 };
 
-export const init = async () => {};
+export const runStandaloneDirective = async (directive, config) => {
+  const dirToRun = await import(`../directives/${directive}`);
+
+  dirToRun.execute(config);
+};
+
+export const initDirectivesJobs = async () => {
+  const directives = await getDirectives();
+
+  console.log(directives);
+  directives.forEach(directive => initDirective(directive));
+};

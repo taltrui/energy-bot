@@ -1,12 +1,5 @@
 import gql from 'graphql-tag';
-import QueryHandler from '../../handlers/graphql/QueryHandler';
-
-const uri = process.env.GITHUB_API_URI;
-const headers = {
-  authorization: `Bearer ${process.env.GITHUB_AUTH_TOKEN}`
-};
-
-const QueryMaker = new QueryHandler(uri, headers);
+import { QueryMaker } from '../../handlers/github';
 
 export const getPrs = from =>
   QueryMaker.execute({

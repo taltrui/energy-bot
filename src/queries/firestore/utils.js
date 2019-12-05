@@ -8,19 +8,20 @@ export const getCollection = async collectionName =>
       const items = [];
       if (!collection || collection.empty) return { error: 'COLLECTION_NOT_FOUND' };
       collection.forEach(item => items.push({ id: item.id, ...(item.data() || {}) }));
-      return { ok: true, data: items };
+      return { data: items };
     })
     .catch(error => ({ error }));
 
 export const getCollectionWithQuery = async (collectionName, query) =>
   db
     .collection(collectionName)
-    .where(query)
+    .where(...query)
     .get()
-    .then(collection => {
+    .then(snapshot => {
       const items = [];
-      if (!collection || collection.empty) return { error: 'COLLECTION_NOT_FOUND' };
-      collection.forEach(item => items.push({ id: item.id, ...(item.data() || {}) }));
-      return { ok: true, data: items };
+
+      if (!snapshot || snapshot.empty) return { error: 'COLLECTION_NOT_FOUND' };
+      snapshot.forEach(item => items.push(item.data));
+      return { data: items };
     })
     .catch(error => ({ error }));

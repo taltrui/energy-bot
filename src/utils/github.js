@@ -1,25 +1,24 @@
-import config from './config';
 import { REVIEW_PENDING, APPROVED, CHANGES_REQUESTED } from '../constants/github';
 
 const getPrsFromData = data => data.data.user.repositories.edges;
 
-const filterReposByNameAndPrs = repos =>
-  repos.filter(
-    repo => config.repositories.includes(repo.node.name) && repo.node.pullRequests.edges.length > 0
-  );
+const filterReposByNameAndPrs = (repos, reposToInclude) =>
+  repos.filter(repo => reposToInclude.includes(repo.node.name) && repo.node.pullRequests.edges.length > 0);
 
-const getPrs = repos =>
+const getPrs = (repos, labelsToAvoid) =>
   Array.prototype.concat.apply(
     [],
-    repos.map(repo => formatPrs(filterPrs(repo.node.pullRequests.edges)))
+    repos.map(repo => formatPrs(filterPrs(repo.node.pullRequests.edges, labelsToAvoid)))
   );
 
-const filterPrs = prs =>
-  prs.filter(pr => {
-    const label = getLabel(pr);
-    if (!label) return true;
-    return !config.labelsToAvoid.includes(label);
-  });
+const filterPrs = (prs, labelsToAvoid) =>
+  labelsToAvoid
+    ? prs.filter(pr => {
+        const label = getLabel(pr);
+        if (!label) return true;
+        return labelsToAvoid.includes(label);
+      })
+    : prs;
 
 const getPRState = reviews => {
   const edges = reviews.edges;
@@ -76,4 +75,5 @@ const formatAsignees = assignees =>
 
 const getLabel = pr => pr.node.labels.edges[0] && pr.node.labels.edges[0].node.name;
 
-export const formatPRData = data => getPrs(filterReposByNameAndPrs(getPrsFromData(data)));
+export const formatPRData = (data, reposToInclude, labelsToAvoid) =>
+  getPrs(filterReposByNameAndPrs(getPrsFromData(data), reposToInclude), labelsToAvoid);
