@@ -24,7 +24,5 @@ export const runStandaloneDirective = async (directive, config) => {
 
 export const initDirectivesJobs = async () => {
   const directives = await getDirectives();
-
-  console.log(directives);
   directives.forEach(directive => initDirective(directive));
 };

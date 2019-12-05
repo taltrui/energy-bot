@@ -21,7 +21,7 @@ export const getCollectionWithQuery = async (collectionName, query) =>
       const items = [];
 
       if (!snapshot || snapshot.empty) return { error: 'COLLECTION_NOT_FOUND' };
-      snapshot.forEach(item => items.push(item.data));
+      snapshot.forEach(item => items.push(item.data()));
       return { data: items };
     })
     .catch(error => ({ error }));

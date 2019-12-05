@@ -6,11 +6,11 @@ export const getPrs = from =>
     query: gql`
       query GET_PRS($from: String!) {
         user(login: $from) {
-          repositories(first: 100) {
+          repositories(first: 25) {
             edges {
               node {
                 name
-                pullRequests(first: 100, states: OPEN) {
+                pullRequests(first: 30, states: OPEN) {
                   edges {
                     node {
                       createdAt
@@ -32,7 +32,7 @@ export const getPrs = from =>
                         login
                       }
                       title
-                      reviews(first: 10) {
+                      reviews(first: 5) {
                         edges {
                           node {
                             author {
@@ -42,7 +42,7 @@ export const getPrs = from =>
                           }
                         }
                       }
-                      assignees(first: 20) {
+                      assignees(first: 10) {
                         edges {
                           node {
                             name

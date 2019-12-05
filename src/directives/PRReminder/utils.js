@@ -1,8 +1,9 @@
 import moment from 'moment';
 import { getSlackId } from '../../utils/slack';
 import { APPROVED, READY_FOR_RELEASE, CHANGES_REQUESTED } from '../../constants/github';
+import { getEmployees } from '../../models/config';
 
-const getAssigneesToTag = (state, author, reviewers, assignees) => {
+const getAssigneesToTag = (author, reviewers, assignees) => {
   if (!reviewers) return assignees;
 
   const asignedReviewers = reviewers.filter(reviewer => assignees.includes(reviewer));
@@ -14,13 +15,13 @@ const getAssigneesToTag = (state, author, reviewers, assignees) => {
   return assignees;
 };
 
-const prTextFormatter = pr => {
+const prTextFormatter = employees => pr => {
   const today = moment();
 
   const timeInDays = today.diff(moment(pr.createdAt), 'days');
   const timeInHours = today.diff(moment(pr.createdAt), 'hours');
 
-  const assignees = getAssigneesToTag(pr.state, pr.author, pr.reviewers, pr.assignees);
+  const assignees = getAssigneesToTag(pr.author, pr.reviewers, pr.assignees);
 
   const openSince =
     timeInDays === 1
@@ -38,7 +39,7 @@ const prTextFormatter = pr => {
     text: {
       type: 'mrkdwn',
       text: `• *${pr.repo}* [${pr.number}] | <${pr.link}|*${pr.title}*>\n _Asignados_: ${assignees
-        .map(assignee => `*${getSlackId(assignee.name)}*`)
+        .map(async assignee =>`*${getSlackId(employees, assignee.name)}*`)
         .join(', ')}\n _Abierto hace_: ${openSince}\n *Estado*: ${
         pr.state === CHANGES_REQUESTED ? 'Se requieren cambios!' : 'Se requiere revisión!'
       }`
@@ -54,8 +55,10 @@ const approvedPrTextFormatter = pr => ({
   }
 });
 
-export const createMessage = prs => {
+export const createMessage = async prs => {
   const today = moment();
+
+  const employees = await getEmployees();
 
   const olderPrs = prs.filter(
     pr =>
@@ -71,8 +74,8 @@ export const createMessage = prs => {
 
   const approvedPRs = prs.filter(pr => pr.state === APPROVED || pr.label === READY_FOR_RELEASE);
 
-  const formattedOlderPrs = olderPrs.map(prTextFormatter);
-  const formattedNewerPrs = newerPrs.map(prTextFormatter);
+  const formattedOlderPrs = olderPrs.map(prTextFormatter(employees));
+  const formattedNewerPrs = newerPrs.map(prTextFormatter(employees));
   const formattedApprovedPRs = approvedPRs.map(approvedPrTextFormatter);
   return [
     {

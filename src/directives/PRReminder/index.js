@@ -9,7 +9,6 @@ const execute = async config => {
   let data = '';
   try {
     data = await getPrs('widergy');
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
