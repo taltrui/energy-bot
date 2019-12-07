@@ -1,16 +1,28 @@
-import config from './config';
+import { CronJob } from 'cron';
+import { getCollection } from '../queries/firestore/utils';
+import { getDirectives } from '../models/config';
 
-export const run = async () => {
-  const dirsToRun = {};
+const createJob = (directive, config) => {
+  const job = new CronJob(config.cron, () => directive.execute(config));
 
-  await Promise.all(
-    config.directives.map(async directive => {
-      dirsToRun[directive] = await import(`../directives/${directive}`);
-      return import(`../directives/${directive}`);
-    })
-  );
+  job.start();
+};
 
-  for (const directive in dirsToRun) {
-    dirsToRun[directive].execute();
-  }
+const initDirective = async directive => {
+  const { id, config } = directive;
+
+  const dirToRun = await import(`../directives/${id}`);
+
+  config.forEach(_config => createJob(dirToRun, _config));
+};
+
+export const runStandaloneDirective = async (directive, config) => {
+  const dirToRun = await import(`../directives/${directive}`);
+
+  dirToRun.execute(config);
+};
+
+export const initDirectivesJobs = async () => {
+  const directives = await getDirectives();
+  directives.forEach(directive => initDirective(directive));
 };

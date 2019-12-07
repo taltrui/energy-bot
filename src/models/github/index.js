@@ -1,23 +1,16 @@
 import gql from 'graphql-tag';
-import QueryHandler from '../../handlers/graphql/QueryHandler';
-
-const uri = process.env.GITHUB_API_URI;
-const headers = {
-  authorization: `Bearer ${process.env.GITHUB_AUTH_TOKEN}`
-};
-
-const QueryMaker = new QueryHandler(uri, headers);
+import { QueryMaker } from '../../handlers/github';
 
 export const getPrs = from =>
   QueryMaker.execute({
     query: gql`
       query GET_PRS($from: String!) {
         user(login: $from) {
-          repositories(first: 100) {
+          repositories(first: 50) {
             edges {
               node {
                 name
-                pullRequests(first: 100, states: OPEN) {
+                pullRequests(first: 30, states: OPEN) {
                   edges {
                     node {
                       createdAt
@@ -39,7 +32,7 @@ export const getPrs = from =>
                         login
                       }
                       title
-                      reviews(first: 10) {
+                      reviews(first: 5) {
                         edges {
                           node {
                             author {
@@ -49,7 +42,7 @@ export const getPrs = from =>
                           }
                         }
                       }
-                      assignees(first: 20) {
+                      assignees(first: 10) {
                         edges {
                           node {
                             name

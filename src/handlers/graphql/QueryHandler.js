@@ -11,5 +11,5 @@ export default class QueryHandler {
     });
   }
 
-  execute = operation => makePromise(execute(this.link, operation))
-};
+  execute = operation => makePromise(execute(this.link, operation));
+}
