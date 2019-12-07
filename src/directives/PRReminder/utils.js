@@ -3,7 +3,7 @@ import { getSlackId } from '../../utils/slack';
 import { APPROVED, READY_FOR_RELEASE, CHANGES_REQUESTED } from '../../constants/github';
 import { getEmployees } from '../../models/config';
 
-const getAssigneesToTag = (state, author, reviewers, assignees) => {
+const getAssigneesToTag = (author, reviewers, assignees) => {
   if (!reviewers) return assignees;
 
   const asignedReviewers = reviewers.filter(reviewer => assignees.includes(reviewer));
@@ -21,7 +21,7 @@ const prTextFormatter = employees => pr => {
   const timeInDays = today.diff(moment(pr.createdAt), 'days');
   const timeInHours = today.diff(moment(pr.createdAt), 'hours');
 
-  const assignees = getAssigneesToTag(pr.state, pr.author, pr.reviewers, pr.assignees);
+  const assignees = getAssigneesToTag(pr.author, pr.reviewers, pr.assignees);
 
   const openSince =
     timeInDays === 1
