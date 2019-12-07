@@ -39,7 +39,7 @@ const prTextFormatter = employees => pr => {
     text: {
       type: 'mrkdwn',
       text: `• *${pr.repo}* [${pr.number}] | <${pr.link}|*${pr.title}*>\n _Asignados_: ${assignees
-        .map(assignee =>`*${getSlackId(employees, assignee.name)}*`)
+        .map(assignee => `*${getSlackId(employees, assignee.name)}*`)
         .join(', ')}\n _Abierto hace_: ${openSince}\n *Estado*: ${
         pr.state === CHANGES_REQUESTED ? 'Se requieren cambios!' : 'Se requiere revisión!'
       }`
@@ -78,7 +78,7 @@ export const createMessage = async prs => {
   const formattedNewerPrs = newerPrs.map(prTextFormatter(employees));
   const formattedApprovedPRs = approvedPRs.map(approvedPrTextFormatter);
 
-  const mes = [
+  return [
     {
       type: 'section',
       text: {
@@ -120,7 +120,4 @@ export const createMessage = async prs => {
     },
     ...formattedApprovedPRs
   ];
-
-  console.log(mes);
-  return mes
 };

@@ -8,6 +8,14 @@ export const getDirectives = async () => {
   } else return data;
 };
 
+export const getDirective = async id => {
+  const { error, data } = await getCollectionWithQuery('directives', ['id', '==', id]);
+
+  if (error) {
+    return console.log(error);
+  } else return data;
+};
+
 export const getEmployees = async () => {
   const { error, data } = await getCollection('employees');
 

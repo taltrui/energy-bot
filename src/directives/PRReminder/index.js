@@ -15,7 +15,7 @@ const execute = async config => {
 
   const formattedData = formatPRData(data, repositories, labelsToAvoid);
 
-  postMessage('Llegaron los PRs!', channel, createMessage(formattedData));
+  postMessage('Llegaron los PRs!', channel, await createMessage(formattedData));
 };
 
 export { execute };
