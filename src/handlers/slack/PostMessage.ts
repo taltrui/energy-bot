@@ -1,6 +1,6 @@
 import client from './WebClient';
 
-export const postMessage = async (text, channel, blocks) => {
+export const postMessage = async (text: string, channel: string, blocks: Array<any>) => {
   try {
     await client.chat.postMessage({
       channel,

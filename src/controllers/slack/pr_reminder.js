@@ -1,7 +1,5 @@
 import express from 'express';
-import fetch from 'node-fetch';
-import cliHandler from '../../cli/pr_reminder';
-import { getCollectionWithQuery } from '../../queries/firestore/utils';
+import cliHandler, { CliInterface } from '../../cli/pr_reminder';
 import { getDirective } from '../../models/config';
 import { runStandaloneDirective } from '../../utils/directives';
 
@@ -23,7 +21,7 @@ router.post('/', async function(req, res) {
   if (!config) return res.send(`La configuración ${id} no existe...`);
 
   const channelToPost = on ? on : channel ? config.channel : current ? channel_id : user_id;
-  const repositories = repos && repos.length > 0 ? repos : config.repositories
+  const repositories = repos?.length > 0 ? repos : config.repositories
   console.log(repositories);
   const configToRun = {...config, channel: channelToPost, repositories}
 

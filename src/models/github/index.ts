@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { QueryMaker } from '../../handlers/github';
 
-export const getPrs = from =>
+export const getPrs = (from: string) =>
   QueryMaker.execute({
     query: gql`
       query GET_PRS($from: String!) {
