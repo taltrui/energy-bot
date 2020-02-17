@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "target": "es2019",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*", "declarations/*"]
+    }
+  },
+  "include": ["src", "declarations/**/*.d.ts"]
+}

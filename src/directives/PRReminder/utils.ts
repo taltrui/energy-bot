@@ -2,26 +2,28 @@ import moment from 'moment';
 import { getSlackId } from '../../utils/slack';
 import { APPROVED, READY_FOR_RELEASE, CHANGES_REQUESTED } from '../../constants/github';
 import { getEmployees } from '../../models/config';
+import { User, PullRequest } from 'github';
+import { Employee } from 'general';
 
-const getAssigneesToTag = (author, reviewers, assignees) => {
+const getAssigneesToTag = (author: User, reviewers: Array<User>, assignees: Array<User>) => {
   if (!reviewers) return assignees;
 
   const asignedReviewers = reviewers.filter(reviewer => assignees.includes(reviewer));
 
-  if (asignedReviewers.lenght >= 2) return asignedReviewers;
+  if (asignedReviewers.length >= 2) return asignedReviewers;
 
-  if (asignedReviewers.lenght === 0) return [author];
+  if (asignedReviewers.length === 0) return [author];
 
   return assignees;
 };
 
-const prTextFormatter = employees => pr => {
+const prTextFormatter = (employees: Array<Employee>) => (pr: PullRequest) => {
   const today = moment();
 
   const timeInDays = today.diff(moment(pr.createdAt), 'days');
   const timeInHours = today.diff(moment(pr.createdAt), 'hours');
 
-  const assignees = getAssigneesToTag(pr.author, pr.reviewers, pr.assignees);
+  const assignees: Array<User> = getAssigneesToTag(pr.author, pr.reviewers, pr.assignees);
 
   const openSince =
     timeInDays === 1
@@ -47,7 +49,7 @@ const prTextFormatter = employees => pr => {
   };
 };
 
-const approvedPrTextFormatter = pr => ({
+const approvedPrTextFormatter = (pr: PullRequest) => ({
   type: 'section',
   text: {
     type: 'mrkdwn',
@@ -55,7 +57,7 @@ const approvedPrTextFormatter = pr => ({
   }
 });
 
-export const createMessage = async prs => {
+export const createMessage = async (prs: Array<PullRequest>) => {
   const today = moment();
 
   const employees = await getEmployees();
