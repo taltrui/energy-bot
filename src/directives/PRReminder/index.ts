@@ -11,8 +11,7 @@ const execute = async (config: Config) => {
   let repos;
 
   try {
-    const { data } = await getPrs('widergy');
-    repos = data;
+    repos = await getPrs('widergy');
   } catch (error) {
     console.log(error);
   }

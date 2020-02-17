@@ -1,7 +1,7 @@
 import { REVIEW_PENDING, APPROVED, CHANGES_REQUESTED } from '../constants/github';
 import { RepositoriesData, Repository, PullRequest, Reviews, PullRequestNode, UserNode } from 'github';
 
-const getPrsFromData = (data: RepositoriesData) => data.user.repositories.edges;
+const getPrsFromData = (data: RepositoriesData) => data.data.user.repositories.edges;
 
 const filterReposByNameAndPrs = (repos: Array<Repository>, reposToInclude: Array<string>) =>
   repos.filter(repo => reposToInclude.includes(repo.node.name) && repo.node.pullRequests.edges.length > 0);

@@ -57,7 +57,7 @@ export type RepositoryNode = {
 };
 
 export type RepositoriesData = {
-  user: { repositories: { edges: Array<Repository> } };
+  data: { user: { repositories: { edges: Array<Repository> } } };
 };
 
 export type Review = {
