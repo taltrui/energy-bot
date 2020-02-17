@@ -11,14 +11,6 @@ import {
   REPOS
 } from '../constants/cli';
 
-export type CliInterface = {
-  channel: string
-  on: string
-  current: string
-  id: string
-  repos: Array<any>
-}
-
 yargs.alias(ID_SHORT, ID_LONG);
 yargs.alias(CHANNEL_LONG, CHANNEL_SHORT);
 yargs.alias(CURRENT_CHANNEL_LONG, CURRENT_CHANNEL_SHORT);

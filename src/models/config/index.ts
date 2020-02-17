@@ -8,7 +8,7 @@ export const getDirectives = async () => {
   } else return data;
 };
 
-export const getDirective = async id => {
+export const getDirective = async (id: string) => {
   const { error, data } = await getCollectionWithQuery('directives', ['id', '==', id]);
 
   if (error) {
@@ -24,7 +24,7 @@ export const getEmployees = async () => {
   } else return data;
 };
 
-export const getEmployee = async name => {
+export const getEmployee = async (name: string) => {
   const { error, data } = await getCollectionWithQuery('employees', ['name', '==', name]);
 
   if (error) {

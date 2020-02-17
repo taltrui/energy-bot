@@ -7,7 +7,11 @@
     "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
-    "module": "commonjs"
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*", "declarations/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "declarations/**/*.d.ts"]
 }

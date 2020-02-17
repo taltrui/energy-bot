@@ -1,17 +1,18 @@
 import { REVIEW_PENDING, APPROVED, CHANGES_REQUESTED } from '../constants/github';
+import { RepositoriesData, Repository, PullRequest, Reviews, PullRequestNode, UserNode } from 'github';
 
-const getPrsFromData = data => data.data.user.repositories.edges;
+const getPrsFromData = (data: RepositoriesData) => data.user.repositories.edges;
 
-const filterReposByNameAndPrs = (repos, reposToInclude) =>
+const filterReposByNameAndPrs = (repos: Array<Repository>, reposToInclude: Array<string>) =>
   repos.filter(repo => reposToInclude.includes(repo.node.name) && repo.node.pullRequests.edges.length > 0);
 
-const getPrs = (repos, labelsToAvoid) =>
+const getPrs = (repos: Array<Repository>, labelsToAvoid: Array<string>) =>
   Array.prototype.concat.apply(
     [],
     repos.map(repo => formatPrs(filterPrs(repo.node.pullRequests.edges, labelsToAvoid)))
   );
 
-const filterPrs = (prs, labelsToAvoid) =>
+const filterPrs = (prs: Array<PullRequestNode>, labelsToAvoid: Array<string>) =>
   labelsToAvoid
     ? prs.filter(pr => {
         const label = getLabel(pr);
@@ -20,10 +21,15 @@ const filterPrs = (prs, labelsToAvoid) =>
       })
     : prs;
 
-const getPRState = reviews => {
-  const edges = reviews.edges;
+const getPRState = (
+  reviews: Reviews
+): {
+  reviewers?: Array<string>;
+  state?: 'APPROVED' | 'CHANGES_REQUESTED' | 'REVIEW_PENDING' | 'REVIEW_PENDING';
+} => {
+  const { edges } = reviews;
 
-  if (edges.length < 0) return REVIEW_PENDING;
+  if (edges.length < 0) return { state: REVIEW_PENDING };
 
   const formattedReviews = edges.map(review => ({
     reviewer: review.node.author.login,
@@ -37,7 +43,7 @@ const getPRState = reviews => {
   const changesRequested = formattedReviews.find(review => review.state === CHANGES_REQUESTED);
 
   if (changesRequested) {
-    const reviewers = edges.map(review => review.reviewer);
+    const reviewers = formattedReviews.map(review => review.reviewer);
 
     return { reviewers, state: CHANGES_REQUESTED };
   }
@@ -45,7 +51,7 @@ const getPRState = reviews => {
   return { state: REVIEW_PENDING };
 };
 
-const formatPrs = prs =>
+const formatPrs = (prs: Array<PullRequestNode>) =>
   prs.map(pr => {
     const { state, reviewers } = getPRState(pr.node.reviews);
     return {
@@ -64,7 +70,7 @@ const formatPrs = prs =>
     };
   });
 
-const formatAsignees = assignees =>
+const formatAsignees = (assignees: { edges: Array<UserNode> }) =>
   assignees.edges.length > 0
     ? assignees.edges
         .map(assignee => ({
@@ -73,7 +79,10 @@ const formatAsignees = assignees =>
         .filter(item => item.name)
     : [];
 
-const getLabel = pr => pr.node.labels.edges[0] && pr.node.labels.edges[0].node.name;
+const getLabel = (pr: PullRequestNode) => pr.node.labels.edges[0] && pr.node.labels.edges[0].node.name;
 
-export const formatPRData = (data, reposToInclude, labelsToAvoid) =>
-  getPrs(filterReposByNameAndPrs(getPrsFromData(data), reposToInclude), labelsToAvoid);
+export const formatPRData = (
+  data: RepositoriesData,
+  reposToInclude: Array<string>,
+  labelsToAvoid: Array<string>
+) => getPrs(filterReposByNameAndPrs(getPrsFromData(data), reposToInclude), labelsToAvoid);

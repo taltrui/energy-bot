@@ -1,9 +1,10 @@
 import admin from 'firebase-admin';
 import dotenv from 'dotenv';
+import { Config } from 'firebase';
 
 dotenv.config();
 
-const serviceAccount = {
+const serviceAccount: Config = {
   type: 'service_account',
   project_id: process.env.FIRESTORE_PROYECT_ID,
   private_key_id: process.env.FIRESTORE_PRIV_KEY_ID,
