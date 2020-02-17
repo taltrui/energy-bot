@@ -7,7 +7,7 @@ export const getPrs = (from: string): Promise<any> =>
     query: gql`
       query GET_PRS($from: String!) {
         user(login: $from) {
-          repositories(first: 50) {
+          repositories(first: 80) {
             edges {
               node {
                 name
