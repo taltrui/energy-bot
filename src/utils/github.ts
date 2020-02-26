@@ -17,7 +17,6 @@ const filterPrs = (prs: Array<PullRequestNode>, labelsToAvoid: Array<string>) =>
   labelsToAvoid
     ? prs.filter(pr => {
         const labels = getLabels(pr);
-        console.log(labels);
         if (labels.length === 0) return true;
         return !labelsToAvoid.some(label => labels.includes(label));
       })
@@ -90,7 +89,6 @@ const formatAsignees = (assignees: { edges: Array<UserNode> }) =>
 
 const getLabels = (pr: PullRequestNode) => {
   const edges = pr.node.labels.edges;
-  console.log(JSON.stringify(edges));
   return edges.map((edge: { node: { name: string } }) => edge.node.name);
 };
 
