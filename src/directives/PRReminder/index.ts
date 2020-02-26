@@ -3,7 +3,6 @@ import { formatPRData } from '../../utils/github';
 import { createMessage } from './utils';
 import { getPrs } from '../../models/github';
 import { Config } from 'pr_reminder';
-import { RepositoriesData } from 'github';
 
 const execute = async (config: Config) => {
   const { channel, repositories, labelsToAvoid } = config;

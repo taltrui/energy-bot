@@ -1,5 +1,6 @@
 import { REVIEW_PENDING, APPROVED, CHANGES_REQUESTED } from '../constants/github';
 import { RepositoriesData, Repository, PullRequest, Reviews, PullRequestNode, UserNode } from 'github';
+import { stringify } from 'querystring';
 
 const getPrsFromData = (data: RepositoriesData) => data.data.user.repositories.edges;
 
@@ -15,9 +16,9 @@ const getPrs = (repos: Array<Repository>, labelsToAvoid: Array<string>) =>
 const filterPrs = (prs: Array<PullRequestNode>, labelsToAvoid: Array<string>) =>
   labelsToAvoid
     ? prs.filter(pr => {
-        const label = getLabel(pr);
-        if (!label) return true;
-        return labelsToAvoid.includes(label);
+        const labels = getLabels(pr);
+        if (labels.length === 0) return true;
+        return !labelsToAvoid.some(label => labels.includes(label));
       })
     : prs;
 
@@ -36,14 +37,21 @@ const getPRState = (
     state: review.node.state
   }));
 
-  const approved = formattedReviews.filter(review => review.state === APPROVED);
+  const filteredReviews = formattedReviews.filter(
+    review =>
+      !formattedReviews.some(
+        reviewToCheck =>
+          reviewToCheck.reviewer === review.reviewer && reviewToCheck.state === reviewToCheck.state
+      )
+  );
+  const approved = filteredReviews.filter(review => review.state === APPROVED);
 
   if (approved.length >= 2) return { state: APPROVED };
 
-  const changesRequested = formattedReviews.find(review => review.state === CHANGES_REQUESTED);
+  const changesRequested = filteredReviews.find(review => review.state === CHANGES_REQUESTED);
 
   if (changesRequested) {
-    const reviewers = formattedReviews.map(review => review.reviewer);
+    const reviewers = filteredReviews.map(review => review.reviewer);
 
     return { reviewers, state: CHANGES_REQUESTED };
   }
@@ -62,7 +70,7 @@ const formatPrs = (prs: Array<PullRequestNode>) =>
       assignees: formatAsignees(pr.node.assignees),
       state,
       reviewers,
-      label: getLabel(pr),
+      labels: getLabels(pr),
       link: pr.node.permalink,
       repo: pr.node.repository.name,
       number: pr.node.number,
@@ -79,7 +87,10 @@ const formatAsignees = (assignees: { edges: Array<UserNode> }) =>
         .filter(item => item.name)
     : [];
 
-const getLabel = (pr: PullRequestNode) => pr.node.labels.edges[0] && pr.node.labels.edges[0].node.name;
+const getLabels = (pr: PullRequestNode) => {
+  const edges = pr.node.labels.edges;
+  return edges.map((edge: { node: { name: string } }) => edge.node.name);
+};
 
 export const formatPRData = (
   data: RepositoriesData,

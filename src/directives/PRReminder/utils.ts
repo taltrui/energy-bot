@@ -10,7 +10,7 @@ const getAssigneesToTag = (author: User, reviewers: Array<User>, assignees: Arra
 
   const asignedReviewers = reviewers.filter(reviewer => assignees.includes(reviewer));
 
-  if (asignedReviewers.length >= 2) return asignedReviewers;
+  if (asignedReviewers.length >= 1) return asignedReviewers;
 
   if (asignedReviewers.length === 0) return [author];
 
@@ -36,13 +36,25 @@ const prTextFormatter = (employees: Array<Employee>) => (pr: PullRequest) => {
       ? `${timeInHours} horas`
       : `${today.diff(moment(pr.createdAt), 'hours')} segundos`;
 
+  const getAssigneesName = () => {
+    const names = assignees.map(assignee => {
+      const name = getSlackId(employees, assignee.name);
+      return name ? `*${name}*` : undefined;
+    });
+
+    const joinedNames = names.join(', ')
+
+    if (names.length < 1 || joinedNames === '') return '_No hay asignados_';
+    return joinedNames;
+  };
+
   return {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `• *${pr.repo}* [${pr.number}] | <${pr.link}|*${pr.title}*>\n _Asignados_: ${assignees
-        .map(assignee => `*${getSlackId(employees, assignee.name)}*`)
-        .join(', ')}\n _Abierto hace_: ${openSince}\n *Estado*: ${
+      text: `• *${pr.repo}* [${pr.number}] | <${pr.link}|*${
+        pr.title
+      }*>\n _Asignados_: ${getAssigneesName()}\n _Abierto hace_: ${openSince}\n *Estado*: ${
         pr.state === CHANGES_REQUESTED ? 'Se requieren cambios!' : 'Se requiere revisión!'
       }`
     }
@@ -64,17 +76,17 @@ export const createMessage = async (prs: Array<PullRequest>) => {
 
   const olderPrs = prs.filter(
     pr =>
-      today.diff(moment(pr.updatedAt), 'days') > 1 && pr.state !== APPROVED && pr.label !== READY_FOR_RELEASE
+      today.diff(moment(pr.updatedAt), 'days') > 1 && pr.state !== APPROVED && !pr.labels.includes(READY_FOR_RELEASE)
   );
 
   const newerPrs = prs.filter(
     pr =>
       today.diff(moment(pr.updatedAt), 'days', true) < 1 &&
       pr.state !== APPROVED &&
-      pr.label !== READY_FOR_RELEASE
+      !pr.labels.includes(READY_FOR_RELEASE)
   );
 
-  const approvedPRs = prs.filter(pr => pr.state === APPROVED || pr.label === READY_FOR_RELEASE);
+  const approvedPRs = prs.filter(pr => pr.state === APPROVED || pr.labels.includes(READY_FOR_RELEASE));
 
   const formattedOlderPrs = olderPrs.map(prTextFormatter(employees));
   const formattedNewerPrs = newerPrs.map(prTextFormatter(employees));
