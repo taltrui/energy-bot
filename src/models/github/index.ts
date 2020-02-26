@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import { QueryMaker } from '../../handlers/github';
-import { RepositoriesData } from 'github';
 
 export const getPrs = (from: string): Promise<any> =>
   QueryMaker.execute({
@@ -22,7 +21,7 @@ export const getPrs = (from: string): Promise<any> =>
                       repository {
                         name
                       }
-                      labels(first: 1) {
+                      labels(first: 3) {
                         edges {
                           node {
                             name
