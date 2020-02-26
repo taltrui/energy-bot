@@ -18,7 +18,7 @@ export type PullRequest = {
   assignees: Array<User>;
   state: string;
   reviewers: Array<User>;
-  label: string;
+  labels: Array<string>;
   link: string;
   repo: string;
   number: number;

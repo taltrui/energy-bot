@@ -23,7 +23,6 @@ router.post('/', async function(req, res) {
 
   const channelToPost = on ? on : channel ? config.channel : current ? channel_id : user_id;
   const repositories = repos?.length > 0 ? repos : config.repositories;
-  console.log(repositories);
   const configToRun = { ...config, channel: channelToPost, repositories };
 
   res.send('Un segundo por favor!');
