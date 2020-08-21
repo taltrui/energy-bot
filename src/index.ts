@@ -3,17 +3,31 @@ import express from 'express';
 import UgoStatus from './controllers/slack/ugo_status';
 import { initDirectivesJobs } from './utils/directives';
 import GetPrs from './controllers/slack/pr_reminder';
+import {createProbot} from 'probot';
+import { findPrivateKey } from 'probot/lib/private-key'
+import probotApp from './probotApp';
 
-const port = process.env.PORT || 8080;
+const port = parseInt(process.env.PORT || '8080', 10);
+
+const probot = createProbot({
+  id: parseInt(process.env.APP_ID || '0', 10),
+  port,
+  secret: process.env.WEBHOOK_SECRET,
+  cert: findPrivateKey() || undefined
+})
+
+probot.load(probotApp)
+
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// Routess
 app.use('/ugo_status', UgoStatus);
 app.use('/get_prs', GetPrs);
+app.use('/probot', probot.server)
 
 //App init
 app.listen(port, async function() {
