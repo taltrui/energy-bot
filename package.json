@@ -32,6 +32,7 @@
     "server:prod": "node ./dist/index.js",
     "dev": "NODE_ENV=development && npm-run-all server",
     "clean": "rimraf dist",
+    "forward": "smee -u https://smee.io/iaEvwpNqvetWKE8b -P /probot -p 8080",
     "build": "tsc",
     "prod": "NODE_ENV=production && npm-run-all clean build server:prod"
   },
