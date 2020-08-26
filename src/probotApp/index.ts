@@ -1,6 +1,6 @@
 import { Application } from 'probot'
 
-import masterCheck from './handlers/masterCheck';
+import mergeable from './handlers/mergeable';
 
 export = (app: Application) => {
   app.on('issues.opened', async (context) => {
@@ -11,5 +11,5 @@ export = (app: Application) => {
   app.on([
     'pull_request.opened',
     'pull_request.edited'
-  ], masterCheck)
+  ], mergeable)
 }

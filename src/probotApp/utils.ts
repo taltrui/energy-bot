@@ -1,1 +1,1 @@
-export const isRelease = (branchName: string): Boolean => new RegExp('release-*').test(branchName);  
+export const isRelease = (branchName: string): boolean => new RegExp('release-*').test(branchName);  

@@ -2,7 +2,7 @@ import { Context } from "probot";
 import { logObject } from "../../utils/devUtils";
 import { isRelease } from "../utils";
 
-const check = async (context: Context<any>): Promise<void> => {
+const mergeable = async (context: Context<any>): Promise<void> => {
   const timeStart = new Date().toISOString();
   const pr = context.payload.pull_request;
   logObject(context.payload);
@@ -12,17 +12,17 @@ const check = async (context: Context<any>): Promise<void> => {
 
   if (pr.base.ref === 'master') {
     if (isRelease(pr.head.ref)) {
-      title = 'Yes!'
-      summary = 'Yes! You can merge this release to master.'
+      title = 'You can safely merge this branch.'
+      summary = 'Release branches can be merged to master.'
       conclusion = 'success'
     } else {
-      title = 'No!'
-      summary = "You can't merge this branch to master!"
+      title = "You shouldn't merge this branch."
+      summary = "Only release branches can be merged to master."
       conclusion = 'failure'
     }
   } else {
-    title = 'Yes!'
-    summary = 'You can merge this branch.';
+    title = 'You can safely merge this branch'
+    summary = 'If base branch is not master, you can merge any branch.';
     conclusion = 'success';
   }
 
@@ -32,7 +32,7 @@ const check = async (context: Context<any>): Promise<void> => {
     await context.github.checks
       .create(
         context.repo({
-          name: 'Can you merge?',
+          name: 'Mergeable',
           head_sha: pr.head.sha,
           status: 'completed',
           started_at: timeStart,
@@ -47,4 +47,4 @@ const check = async (context: Context<any>): Promise<void> => {
   }
 }
 
-export default check;
+export default mergeable;
