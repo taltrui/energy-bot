@@ -8,7 +8,7 @@ import {
   CURRENT_CHANNEL_SHORT,
   CONFIG_CHANNEL_SHORT,
   CONFIG_CHANNEL_LONG,
-  REPOS
+  REPOS,
 } from '../constants/cli';
 
 yargs.alias(ID_SHORT, ID_LONG);

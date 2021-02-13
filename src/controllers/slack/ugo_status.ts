@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 
 const router = express.Router();
 
-router.post('/', async function(req, res) {
+router.post('/', async function (req, res) {
   const ugo_res = await fetch('https://utilitygo-api-dev.widergydev.com/health_check/all');
 
   const ugo_data = await ugo_res.json();

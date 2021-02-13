@@ -4,7 +4,7 @@ import { createMessage } from './utils';
 import { getPrs } from '../../models/github';
 import { Config } from 'pr_reminder';
 
-const execute = async (config: Config) => {
+const execute = async (config: Config): Promise<void> => {
   const { channel, repositories, labelsToAvoid } = config;
 
   let repos;

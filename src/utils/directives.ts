@@ -17,13 +17,13 @@ const initDirective = async (directive: Directive) => {
   config.forEach((_config: Config) => createJob(dirToRun, _config));
 };
 
-export const runStandaloneDirective = async (directive: string, config: Config) => {
+export const runStandaloneDirective = async (directive: string, config: Config): Promise<void> => {
   const dirToRun = await import(`../directives/${directive}`);
 
   dirToRun.execute(config);
 };
 
-export const initDirectivesJobs = async () => {
+export const initDirectivesJobs = async (): Promise<void> => {
   const directives = await getDirectives();
   directives.forEach((directive: Directive) => initDirective(directive));
 };

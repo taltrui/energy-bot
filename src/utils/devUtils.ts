@@ -1,3 +1,4 @@
-const util = require('util');
+import util from 'util';
 
-export const logObject = (object: any) => console.log(util.inspect(object, {showHidden: false, depth: null}))
+export const logObject = (object: unknown): void =>
+  console.log(util.inspect(object, { showHidden: false, depth: null }));

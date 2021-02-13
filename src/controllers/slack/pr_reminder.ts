@@ -6,7 +6,7 @@ import { Config, CLIOptions } from 'pr_reminder';
 
 const router = express.Router();
 
-router.post('/', async function(req, res) {
+router.post('/', async function (req, res) {
   const { text, user_id, channel_id } = req.body;
 
   const { channel, on, current, id, repos }: CLIOptions = (cliHandler.parse(text) as unknown) as CLIOptions;

@@ -1,50 +1,45 @@
-import { Context } from "probot";
-import { logObject } from "../../utils/devUtils";
-import { isRelease } from "../utils";
+import { Context } from 'probot';
+import { isRelease, isWIPorHold } from '../utils';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mergeable = async (context: Context<any>): Promise<void> => {
   const timeStart = new Date().toISOString();
   const pr = context.payload.pull_request;
-  logObject(context.payload);
-  let summary: string | undefined;
-  let conclusion: 'success' | 'failure' | undefined;
-  let title: string | undefined;
+
+  let isMergeable = true;
+
+  let isBaseMaster = false;
+  let isHeadRelease = false;
 
   if (pr.base.ref === 'master') {
-    if (isRelease(pr.head.ref)) {
-      title = 'You can safely merge this branch.'
-      summary = 'Release branches can be merged to master.'
-      conclusion = 'success'
-    } else {
-      title = "You shouldn't merge this branch."
-      summary = "Only release branches can be merged to master."
-      conclusion = 'failure'
-    }
-  } else {
-    title = 'You can safely merge this branch'
-    summary = 'If base branch is not master, you can merge any branch.';
-    conclusion = 'success';
+    isBaseMaster = true;
   }
 
-
-  context.github.request(pr.base.labels_url)
-  if (summary && conclusion) {
-    await context.github.checks
-      .create(
-        context.repo({
-          name: 'Mergeable',
-          head_sha: pr.head.sha,
-          status: 'completed',
-          started_at: timeStart,
-          conclusion,
-          completed_at: new Date().toISOString(),
-          output: {
-            title,
-            summary
-          }
-        })
-      )
+  if (isRelease(pr.head.ref)) {
+    isHeadRelease = true;
   }
-}
+
+  console.log(pr.labels);
+  if (isWIPorHold(pr.labels) || (isBaseMaster && !isHeadRelease)) {
+    isMergeable = false;
+  }
+
+  await context.octokit.checks.create(
+    context.repo({
+      name: 'Mergeable',
+      head_sha: pr.head.sha,
+      status: 'completed',
+      started_at: timeStart,
+      conclusion: isMergeable ? 'success' : 'failure',
+      completed_at: new Date().toISOString(),
+      output: {
+        title: isMergeable ? 'Pull request can be merged.' : 'Pull request cannot be merged.',
+        summary: isMergeable
+          ? 'This PR passed the checks for it to be merged.'
+          : 'This PR is either in WIP or Hold status or a non release branch has master as its base.',
+      },
+    })
+  );
+};
 
 export default mergeable;

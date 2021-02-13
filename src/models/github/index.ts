@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import { QueryMaker } from '../../handlers/github';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getPrs = (from: string): Promise<any> =>
   QueryMaker.execute({
     query: gql`
@@ -59,6 +60,6 @@ export const getPrs = (from: string): Promise<any> =>
       }
     `,
     variables: {
-      from
-    }
+      from,
+    },
   });
