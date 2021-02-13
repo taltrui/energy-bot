@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 import { QueryMaker } from '../../handlers/github';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getPrs = (from: string): Promise<any> =>
   QueryMaker.execute({
     query: gql`
       query GET_PRS($from: String!) {
         user(login: $from) {
-          repositories(first: 80) {
+          repositories(first: 90, isFork: false) {
             edges {
               node {
                 name
@@ -59,6 +60,6 @@ export const getPrs = (from: string): Promise<any> =>
       }
     `,
     variables: {
-      from
-    }
+      from,
+    },
   });
