@@ -4,12 +4,12 @@ import UgoStatus from './controllers/slack/ugo_status';
 import { initDirectivesJobs } from './utils/directives';
 import GetPrs from './controllers/slack/pr_reminder';
 import { createProbot, createNodeMiddleware } from 'probot';
-// import { findPrivateKey } from 'probot/lib/private-key';
 import probotApp from './probotApp';
 
 const port = parseInt(process.env.PORT || '8080', 10);
 
 const app = express();
+app.disable('x-powered-by');
 
 // Middlewares
 app.use(express.json());
