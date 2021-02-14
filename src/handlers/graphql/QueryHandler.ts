@@ -5,13 +5,13 @@ import fetch from 'node-fetch';
 export default class QueryHandler {
   link: HttpLink;
 
-  constructor(uri: string | undefined, headers: any) {
+  constructor(uri: string | undefined, headers: {[key: string]: string}) {
     this.link = new HttpLink({
       uri,
-      fetch: fetch as any,
-      headers
+      fetch: fetch as never,
+      headers,
     });
   }
 
-  execute = (operation: GraphQLRequest) => makePromise(execute(this.link, operation));
+  execute = (operation: GraphQLRequest): Promise<unknown> => makePromise(execute(this.link, operation));
 }
