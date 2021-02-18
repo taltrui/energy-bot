@@ -2,7 +2,6 @@
   "name": "energy-bot",
   "version": "2.1.0",
   "description": "Bot for Slack",
-  "main": "src/index.js",
   "author": "Tomás Altrui",
   "license": "MIT",
   "dependencies": {
