@@ -24,13 +24,12 @@
     "yargs": "^15.0.2"
   },
   "scripts": {
-    "start": "yarn prod",
+    "start": "NODE_ENV=production && npm-run-all clean build server:prod",
     "server:prod": "node ./dist/index.js",
     "dev": "NODE_ENV=development && npm-run-all server",
     "clean": "rimraf dist",
     "forward": "smee -u https://smee.io/rg9p5pHdJjcdUhi -P /probot -p 8080",
-    "build": "tsc",
-    "prod": "NODE_ENV=production && npm-run-all clean build server:prod"
+    "build": "tsc"
   },
   "devDependencies": {
     "@firebase/app-types": "^0.6.1",
