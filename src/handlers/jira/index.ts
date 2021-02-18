@@ -1,6 +1,7 @@
 import { ApiResponse } from 'apisauce';
 
 import api from '../../config/jiraAPI';
+
 export const addMessage = (
   content: Array<{ type: string; content: Array<{ text: string; type: string }> }>,
   issueId: string
