@@ -9,6 +9,10 @@ export = (app: Probot): void => {
       'pull_request.labeled',
       'pull_request.unlabeled',
       'pull_request.reopened',
+      'pull_request.assigned',
+      'pull_request.synchronize',
+      'pull_request.reopened',
+      'pull_request.unassigned'
     ],
     mergeable
   );
