@@ -8,6 +8,7 @@
     "@octokit/core": "^3.2.5",
     "@slack/events-api": "^2.3.0",
     "@slack/web-api": "^5.1.0",
+    "apisauce": "^2.0.1",
     "apollo-link": "^1.2.12",
     "apollo-link-http": "^1.5.15",
     "body-parser": "^1.19.0",
