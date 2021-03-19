@@ -14,9 +14,7 @@ export const addMessage = (content: Content, issueId: string): Promise<ApiRespon
 
 export const transitionIssue = (transitionId: string, issueId: string): Promise<ApiResponse<unknown>> =>
   api.post(`/issue/${issueId}/transitions`, {
-    body: {
-      transition: {
-        id: transitionId,
-      },
+    transition: {
+      id: transitionId,
     },
   });

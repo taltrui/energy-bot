@@ -19,7 +19,6 @@ const mergeable = async (context: Context<any>): Promise<void> => {
     isHeadRelease = true;
   }
 
-  console.log(pr.labels);
   if (isWIPorHold(pr.labels) || (isBaseMaster && !isHeadRelease)) {
     isMergeable = false;
   }
