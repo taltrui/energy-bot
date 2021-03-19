@@ -1,6 +1,6 @@
 import { Probot } from 'probot';
 import mergeable from './handlers/mergeable';
-import released from './handlers/released';
+import updateJiraStatus from './handlers/updateJiraStatus';
 
 export = (app: Probot): void => {
   app.on(
@@ -14,5 +14,5 @@ export = (app: Probot): void => {
     mergeable
   );
 
-  app.on(['pull_request.labeled'], released);
+  app.on(['pull_request.opened', 'pull_request.labeled'], updateJiraStatus);
 };
