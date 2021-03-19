@@ -1,0 +1,1 @@
+export type Content = Array<{ type: string; content: Array<{ text: string; type: string }>}>;

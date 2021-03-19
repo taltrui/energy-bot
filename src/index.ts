@@ -1,5 +1,7 @@
 import 'regenerator-runtime/runtime';
+import './dotenv';
 import express from 'express';
+
 import UgoStatus from './controllers/slack/ugo_status';
 import { initDirectivesJobs } from './utils/directives';
 import GetPrs from './controllers/slack/pr_reminder';

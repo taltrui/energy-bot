@@ -34,7 +34,7 @@ export type PullRequestNode = {
     assignees: { edges: Array<UserNode> };
     state: string;
     reviews: Reviews;
-    labels: { edges: any };
+    labels: { edges: Array<{ node: { name: string } }> };
     link: string;
     repository: RepositoryNode;
     permalink: string;
