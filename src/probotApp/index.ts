@@ -6,10 +6,10 @@ export = (app: Probot): void => {
   app.on(
     [
       'pull_request.opened',
-      'pull_request.edited',
-      'pull_request.labeled',
-      'pull_request.unlabeled',
-      'pull_request.reopened',
+      'pull_request.asd',
+      'pull_request.asd',
+      'pull_request.asd',
+      'pull_request.asd',
     ],
     mergeable
   );
