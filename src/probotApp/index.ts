@@ -5,11 +5,11 @@ import released from './handlers/released';
 export = (app: Probot): void => {
   app.on(
     [
-      'pull_request.opened',
-      'pull_request.edited',
-      'pull_request.labeled',
-      'pull_request.unlabeled',
-      'pull_request.reopened',
+      'pull_request.hhh',
+      'pull_request.hhh',
+      'pull_request.hh',
+      'pull_request.hh',
+      'pull_request.hhh',
     ],
     mergeable
   );
